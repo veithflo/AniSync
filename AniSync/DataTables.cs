@@ -94,35 +94,37 @@ namespace AniSync
             settings.Columns.Add("id", typeof(string)); //PK
             settings.Columns.Add("userid", typeof(string)); //FK
             settings.Columns.Add("clientid", typeof(string)); //FK
-            settings.Columns.Add("download", typeof(string));
-            settings.Columns.Add("workload", typeof(string));
-            settings.Columns.Add("watched", typeof(string));
-            settings.Columns.Add("archive", typeof(string));
+            settings.Columns.Add("workload", typeof(string)); //Folder for Torrents
+            settings.Columns.Add("download", typeof(string)); //Folder for finished Downloads
+            settings.Columns.Add("watched", typeof(string)); //Folder for watched Episodes
+            settings.Columns.Add("archive", typeof(string)); //Folder for archived Episodes (Set only for Archive)
             settings.Columns.Add("autostart", typeof(bool));
             settings.Columns.Add("showpopup", typeof(bool));
-            settings.Columns.Add("systray", typeof(bool));
-            settings.Columns.Add("interval", typeof(Int16));
+            settings.Columns.Add("systray", typeof(bool)); //
+            settings.Columns.Add("interval", typeof(Int16)); //Interval for Checks in Minutes
             settings.PrimaryKey = new DataColumn[] { settings.Columns["id"] };
 
             trackers.Columns.Add("id", typeof(string)); //PK
             trackers.Columns.Add("userid", typeof(string)); //FK
             trackers.Columns.Add("name", typeof(string));
-            trackers.Columns.Add("url", typeof(string));
+            trackers.Columns.Add("url", typeof(string)); //URL-Pattern for Search and List of Animes and Episodes (use {1} for Substitute)
+            trackers.Columns.Add("parser", typeof(string)); //Name of implemented Parser
             trackers.Columns.Add("mode", typeof(string)); //C=Closed (Do not use), F=Full (Scan for new Animes and Episodes), U=Update (Scan only for new Episodes)
+            settings.Columns.Add("priority", typeof(Int16)); //Use Tracker with higher Priority first
             trackers.PrimaryKey = new DataColumn[] { trackers.Columns["id"] };
 
             animes.Columns.Add("id", typeof(string)); //PK
             animes.Columns.Add("userid", typeof(string)); //FK
             animes.Columns.Add("name_jap", typeof(string));
             animes.Columns.Add("name_eng", typeof(string));
-            animes.Columns.Add("name_ger", typeof(string));
-            animes.Columns.Add("language", typeof(string));
-            animes.Columns.Add("sub", typeof(string));
-            animes.Columns.Add("dub", typeof(string));
-            animes.Columns.Add("torrent", typeof(string));
-            animes.Columns.Add("filename", typeof(string));
+            //animes.Columns.Add("name_ger", typeof(string));
+            //animes.Columns.Add("language", typeof(string));
+            //animes.Columns.Add("sub", typeof(string));
+            //animes.Columns.Add("dub", typeof(string));
+            animes.Columns.Add("torrent", typeof(string)); 
+            animes.Columns.Add("renaming", typeof(string)); //Pattern for renaming Files
             animes.Columns.Add("status", typeof(string));
-            animes.Columns.Add("rating", typeof(string));
+            animes.Columns.Add("rating", typeof(Int16));
             animes.PrimaryKey = new DataColumn[] { animes.Columns["id"] };
 
             episodes.Columns.Add("id", typeof(string)); //PK
@@ -148,10 +150,10 @@ namespace AniSync
             row["id"] = "SETTINGID"; //PK
             row["userid"] = "USERID"; //FK
             row["clientid"] = ""; //FK
-            row["download"] = "G:\[VIDEOS]";
-            row["workload"] = "G:\[VIDEOS]\[AniSync]";
-            row["watched"] = "G:\[VIDEOS]\[FILE]\[SERIES]";
-            row["archive"] = "G:\[VIDEOS]\[FILE]\[SERIES]";
+            row["workload"] = @"G:\[VIDEOS]\[AniSync]";
+            row["download"] = @"G:\[VIDEOS]";
+            row["watched"] = @"G:\[VIDEOS]\[FILE]\[SERIES]";
+            row["archive"] = @"G:\[VIDEOS]\[FILE]\[SERIES]";
             row["autostart"] = true;
             row["showpopup"] = true;
             row["systray"] = true;
@@ -161,7 +163,8 @@ namespace AniSync
             row["id"] = "TRACKERID"; //PK
             row["userid"] = "USERID"; //FK
             row["name"] = "Nyaa.si (HorribleSubs)";
-            row["url"] = "https://nyaa.si/user/HorribleSubs?f=0&c=0_0&q=%5B720p%5D";
+            row["url"] = @"https://nyaa.si/user/HorribleSubs?f=0&c=0_0&q=xxxxx*[720p]";
+            row["parser"] = "Nyaa.si";
             row["mode"] = "U"; //C=Closed (Do not use), F=Full (Scan for new Animes and Episodes), U=Update (Scan only for new Episodes)
 
             row = animes.NewRow();
@@ -174,9 +177,9 @@ namespace AniSync
             row["sub"] = "";
             row["dub"] = "";
             row["torrent"] = "";
-            row["filename"] = "";
+            row["renaming"] = "";
             row["status"] = "";
-            row["rating"] = "";
+            row["rating"] = 0;
 
             row = episodes.NewRow();
             row["id"] = ""; //PK
