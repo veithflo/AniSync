@@ -66,7 +66,7 @@ namespace AniSync
         public string checksum;
     }
     */
-    public class tables
+    public class Tables
     {
         DataTable tab;
         DataColumn col;
@@ -79,7 +79,7 @@ namespace AniSync
         public DataTable animes = new DataTable("animes");
         public DataTable episodes = new DataTable("episodes");
 
-        public void init()
+        public void Init()
         {
             users.Columns.Add("id", typeof(string)); //PK
             users.Columns.Add("password", typeof(string));
@@ -132,6 +132,5 @@ namespace AniSync
             episodes.Columns.Add("checksum", typeof(string));
             episodes.PrimaryKey = new DataColumn[] { episodes.Columns["id"] };
         }
-
     }
 }
