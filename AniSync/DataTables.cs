@@ -98,9 +98,9 @@ namespace AniSync
             settings.Columns.Add("workload", typeof(string));
             settings.Columns.Add("watched", typeof(string));
             settings.Columns.Add("archive", typeof(string));
-            settings.Columns.Add("autostart", typeof(string));
-            settings.Columns.Add("showpopup", typeof(string));
-            settings.Columns.Add("systray", typeof(string));
+            settings.Columns.Add("autostart", typeof(bool));
+            settings.Columns.Add("showpopup", typeof(bool));
+            settings.Columns.Add("systray", typeof(bool));
             settings.Columns.Add("interval", typeof(Int16));
             settings.PrimaryKey = new DataColumn[] { settings.Columns["id"] };
 
@@ -131,6 +131,59 @@ namespace AniSync
             episodes.Columns.Add("filename", typeof(string));
             episodes.Columns.Add("checksum", typeof(string));
             episodes.PrimaryKey = new DataColumn[] { episodes.Columns["id"] };
+        }
+        private void TestData()
+        {
+            row = users.NewRow();
+            row["id"] = "USERID"; //PK
+            row["password"] = "PASSWORD";
+            row["config"] = "G"; //L=Local (Config stored only Local), G=Global (Same Config for all Clients stored Online), C=Client (Different Config for each Client stored Online)
+
+            row = clients.NewRow();
+            row["id"] = "CLIENTID"; //PK
+            row["userid"] = "USERID"; //FK
+            row["name"] = "CLIENTNAME";
+
+            row = settings.NewRow();
+            row["id"] = "SETTINGID"; //PK
+            row["userid"] = "USERID"; //FK
+            row["clientid"] = ""; //FK
+            row["download"] = "G:\[VIDEOS]";
+            row["workload"] = "G:\[VIDEOS]\[AniSync]";
+            row["watched"] = "G:\[VIDEOS]\[FILE]\[SERIES]";
+            row["archive"] = "G:\[VIDEOS]\[FILE]\[SERIES]";
+            row["autostart"] = true;
+            row["showpopup"] = true;
+            row["systray"] = true;
+            row["interval"] = 15;
+
+            row = trackers.NewRow();
+            row["id"] = "TRACKERID"; //PK
+            row["userid"] = "USERID"; //FK
+            row["name"] = "Nyaa.si (HorribleSubs)";
+            row["url"] = "https://nyaa.si/user/HorribleSubs?f=0&c=0_0&q=%5B720p%5D";
+            row["mode"] = "U"; //C=Closed (Do not use), F=Full (Scan for new Animes and Episodes), U=Update (Scan only for new Episodes)
+
+            row = animes.NewRow();
+            row["id"] = ""; //PK
+            row["userid"] = ""; //FK
+            row["name_jap"] = "";
+            row["name_eng"] = "";
+            row["name_ger"] = "";
+            row["language"] = "";
+            row["sub"] = "";
+            row["dub"] = "";
+            row["torrent"] = "";
+            row["filename"] = "";
+            row["status"] = "";
+            row["rating"] = "";
+
+            row = episodes.NewRow();
+            row["id"] = ""; //PK
+            row["animeid"] = ""; //FK
+            row["number"] = "";
+            row["filename"] = "";
+            row["checksum"] = "";
         }
     }
 }

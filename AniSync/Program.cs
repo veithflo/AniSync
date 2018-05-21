@@ -19,8 +19,8 @@ namespace AniSync
             //Application.Run(new Form1());
 
 
-            tables tab = new tables();
-            tab.init();
+            Tables tab = new Tables();
+            tab.Init();
 
             Console.WriteLine(tab.users.Rows.Count);
             Console.WriteLine(tab.users.Rows.Contains("ASDF"));
